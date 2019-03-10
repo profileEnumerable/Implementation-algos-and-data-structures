@@ -7,14 +7,22 @@ namespace Algorithms_and_data_structures
     {
         private static void Main()
         {
-            var doubleLinkedList = new DoubleLinkedList<string>();
+            var doubleLinkedList = new DoubleLinkedList<int>();
 
+            doubleLinkedList.AddLast(1);
+            doubleLinkedList.AddLast(2);
+            doubleLinkedList.AddLast(3);
+            doubleLinkedList.AddLast(4);
 
-            var linkedList = new LinkedList<int>();
+            doubleLinkedList.AddAfter(25, 1);
 
-            linkedList.AddFirst(12);
+            foreach (var item in doubleLinkedList)
+            {
+                Console.WriteLine(item);
+            }
 
-            Console.WriteLine(string.Join(" ",linkedList));
+            Console.WriteLine();
+            doubleLinkedList.ReverseOutput();
         }
     }
-}   
+}
