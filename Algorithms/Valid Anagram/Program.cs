@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Algorithms
 {
@@ -10,9 +11,9 @@ namespace Algorithms
     {
         public static void ShowTestsFunc(params AnagramFunc[] funcs)
         {
-            Stopwatch stopwatch = new Stopwatch();
+            var stopwatch = new Stopwatch();
 
-            Dictionary<string, string> testData = new Dictionary<string, string>()
+            var testData = new Dictionary<string, string>()
             {
                 { "anagram","nagaram" },
                 { "rat","car" }
@@ -57,14 +58,18 @@ namespace Algorithms
             char[] tArr = t.ToCharArray();
 
             if (s.Length != t.Length)
+            {
                 return false;
+            }
 
             for (int i = 0; i < s.Length; i++)
             {
                 if (s[i] != tArr[i])
                 {
                     if ((foundIndex = Array.IndexOf(tArr, s[i], i + 1)) == -1)
+                    {
                         return false;
+                    }
 
                     char temp = tArr[i];
                     tArr[i] = tArr[foundIndex];
@@ -74,9 +79,20 @@ namespace Algorithms
             return true;
         }
 
+        public static bool IsAnagramBothStrSort(string s, string t)
+        {
+            char[] sArray = s.ToCharArray();
+            char[] tArray = t.ToCharArray();
+
+            Array.Sort(sArray);
+            Array.Sort(tArray);
+
+            return sArray.SequenceEqual(tArray);
+        }
+
         private static void Main()
         {
-            ShowTestsFunc(IsAnagramDeletingElem, IsAnagramManualSort);
+            ShowTestsFunc(IsAnagramDeletingElem, IsAnagramManualSort, IsAnagramBothStrSort);
         }
     }
 }
