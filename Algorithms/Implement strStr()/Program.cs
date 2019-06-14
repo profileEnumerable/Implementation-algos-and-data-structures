@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
+
 
 namespace Algorithms
 {
@@ -16,7 +15,8 @@ namespace Algorithms
 
             var testData = new Dictionary<string, string>()
             {
-                {"bbaa","aab"}
+                {"hello","ll"},
+                {"aaaaa","bba" }
             };
 
             foreach (KeyValuePair<string, string> data in testData)
@@ -34,55 +34,59 @@ namespace Algorithms
             }
         }
 
-        public static int StrStr(string haystack, string needle)//TODO: make the correct exit condition
+        public static int StrStr(string haystack, string needle)
         {
-            int haystLimit = needle.Length == 1 ? haystack.Length : haystack.Length - 1;
-
             if (needle.Length == 0)
             {
                 return 0;
             }
 
-            for (int i = 0; i < haystLimit; i++)
+            int neeIndex = 0;
+            int heyIndex = 0;
+
+            for (int i = 0; heyIndex < haystack.Length;)
             {
-                int j;
-                for (j = 0; j < needle.Length && haystack[i] == needle[j]; j++)
-                {
-                    i++;
+                if (haystack[heyIndex++] == needle[neeIndex++])
+                {                    
+                    if (neeIndex == needle.Length)
+                    {
+                        return i;
+                    }
                 }
-                if (j == needle.Length)
+                else
                 {
-                    return i - needle.Length;
+                    neeIndex = 0;
+                    heyIndex = ++i;               
                 }
             }
 
             return -1;
         }
 
-        //public int StrStr(string haystack, string needle)//Slowly working method
-        //{
-        //    int lenOfneedle = needle.Length;
+        public static int StrStrUseSubstr(string haystack, string needle)
+        {
+            int lenOfneedle = needle.Length;
 
-        //    if (haystack.Length < lenOfneedle || lenOfneedle == 0)
-        //    {
-        //        return lenOfneedle == 0 ? 0 : -1;
-        //    }
+            if (haystack.Length < lenOfneedle || lenOfneedle == 0)
+            {
+                return lenOfneedle == 0 ? 0 : -1;
+            }
 
-        //    for (int i = 0; i < haystack.Length; i++)
-        //    {
-        //        if (haystack[i] == needle[0] && (i + lenOfneedle) <= haystack.Length)
-        //        {
-        //            if (haystack.Substring(i, lenOfneedle) == needle)
-        //            {
-        //                return i;
-        //            }
-        //        }
-        //    }
-        //    return -1;
-        //}
+            for (int i = 0; i < haystack.Length; i++)
+            {
+                if (haystack[i] == needle[0] && (i + lenOfneedle) <= haystack.Length)
+                {
+                    if (haystack.Substring(i, lenOfneedle) == needle)
+                    {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
         private static void Main()
         {
-            ShowTestsFunc(StrStr);
+            ShowTestsFunc(StrStr, StrStrUseSubstr);
         }
     }
 }
