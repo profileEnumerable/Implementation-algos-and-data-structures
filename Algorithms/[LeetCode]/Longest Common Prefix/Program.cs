@@ -7,20 +7,25 @@ public sealed class Test
     {
         int currCharPosition = 0;
         string prefix = string.Empty;
-
+        string prevPrefix = string.Empty;
 
         while (true)
         {
-            if (currCharPosition < strs[0].Length)
+            if (strs.Length != 0 && currCharPosition < strs[0].Length)
             {
+                prevPrefix = prefix;
                 prefix += strs[0][currCharPosition];
+            }
+            else
+            {
+                return prefix;
             }
 
             for (int i = 1; i < strs.Length; i++)
             {
                 if (currCharPosition < strs[i].Length && strs[i][currCharPosition] != prefix[currCharPosition])
                 {
-                    Console.WriteLine(prefix);
+                    return prevPrefix;
                 }
             }
 
@@ -30,6 +35,6 @@ public sealed class Test
 
     private static void Main()
     {
-        LongestCommonPrefix(new[] {"flower", "flow", "flight"});
+        Console.WriteLine(LongestCommonPrefix(new string[] {"aa", "a"}));
     }
 }
